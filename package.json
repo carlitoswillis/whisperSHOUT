@@ -1,0 +1,33 @@
+{
+  "name": "whispershout",
+  "version": "1.0.0",
+  "description": "A private chat app for secure communication. Includes automatic chat clearing, a flush button for clearing all chat instances, and a long term pinning option for important and less private messages.",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlitoswillis/whisperSHOUT.git"
+  },
+  "keywords": [
+    "privacy",
+    "chat",
+    "group",
+    "chat",
+    "messaging",
+    "private",
+    "messaging"
+  ],
+  "author": "Carlitos Willis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carlitoswillis/whisperSHOUT/issues"
+  },
+  "homepage": "https://github.com/carlitoswillis/whisperSHOUT#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "preact": "^10.4.4",
+    "socket.io": "^2.3.0"
+  }
+}
