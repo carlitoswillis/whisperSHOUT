@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import PropTypes from 'prop-types';
 import Messages from './Messages';
 
@@ -70,20 +71,23 @@ class Chat extends React.Component {
 
   handleClick(e) {
     const index = e.target.name.split(' ')[1];
-    const { messages } = this.state;
+    let { messages } = this.state;
+    messages = [...messages];
     const message = messages[index];
+    message.pinned = !message.pinned;
     const settings = {
       url: 'http://127.0.0.1:3000/save/',
-      method: 'POST',
+      method: message.pinned ? 'POST' : 'DELETE',
       timeout: 0,
       headers: {
         'Content-Type': 'application/json',
       },
       data: JSON.stringify(message),
     };
-
-    $.ajax(settings).done((response) => {
-      console.log(response);
+    $.ajax(settings).done(() => {
+      this.setState(
+        { messages },
+      );
     });
   }
 

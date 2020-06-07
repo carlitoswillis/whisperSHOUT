@@ -30,7 +30,25 @@ const readSavedMessages = (room, callback) => {
 };
 
 const saveMessage = (message, callback) => {
-  pool.query(`INSERT INTO saved(room, message, time, username) values('${message.room}', '${message.outgoingMessage}', '${message.time}', '${message.username}')`, (err) => {
+  let query = '';
+  pool.query(`SELECT * FROM saved WHERE id='${message.id}'`, (err) => {
+    if (err) {
+      query = `INSERT INTO saved(room, message, time, username) values('${message.room}', '${message.outgoingMessage}', '${message.time}', '${message.username}')`;
+    } else {
+      query = `INSERT INTO saved(room, message, time, username, id) values('${message.room}', '${message.outgoingMessage}', '${message.time}', '${message.username}', ${message.id}) ON CONFLICT DO NOTHING`;
+    }
+    pool.query(query, (error) => {
+      if (error) {
+        callback(error);
+      } else {
+        callback(null);
+      }
+    });
+  });
+};
+
+const deleteMessage = (message, callback) => {
+  pool.query(`DELETE FROM saved WHERE id=${message.id}`, (err) => {
     if (err) {
       callback(err);
     } else {
@@ -39,6 +57,8 @@ const saveMessage = (message, callback) => {
   });
 };
 
+// DELETE FROM reviews WHERE id = '${id}'
+
 module.exports = {
-  saveMessage, readSavedMessages,
+  saveMessage, readSavedMessages, deleteMessage,
 };
