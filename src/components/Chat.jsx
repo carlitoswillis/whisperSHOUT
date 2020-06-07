@@ -3,6 +3,7 @@ import Messages from './Messages';
 
 const React = require('react');
 const io = require('socket.io-client');
+const $ = require('jquery');
 
 class Chat extends React.Component {
   constructor(props) {
@@ -18,14 +19,21 @@ class Chat extends React.Component {
 
   componentDidMount() {
     const { socket, messages, room } = this.state;
-    const newMessages = [...messages];
+    let newMessages = [...messages];
 
     socket.on('connect', () => {
       socket.emit('join', { room });
     });
 
     socket.on('message', (message) => {
-      newMessages.push(message);
+      newMessages = [message, ...newMessages];
+      this.setState(
+        { messages: newMessages },
+      );
+    });
+
+    socket.on('loadinitialmessages', (data) => {
+      newMessages = [...data.messages, ...newMessages];
       this.setState(
         { messages: newMessages },
       );
@@ -39,7 +47,7 @@ class Chat extends React.Component {
     const newMessage = {
       username, room, outgoingMessage, time: new Date(),
     };
-    const newMessages = [...messages, newMessage];
+    const newMessages = [newMessage].concat(messages);
     socket.emit('message', newMessage);
     this.setState(
       { messages: newMessages }, () => {
@@ -60,14 +68,33 @@ class Chat extends React.Component {
     });
   }
 
+  handleClick(e) {
+    const index = e.target.name.split(' ')[1];
+    const { messages } = this.state;
+    const message = messages[index];
+    const settings = {
+      url: 'http://127.0.0.1:3000/save/',
+      method: 'POST',
+      timeout: 0,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify(message),
+    };
+
+    $.ajax(settings).done((response) => {
+      console.log(response);
+    });
+  }
+
   render() {
     const { messages } = this.state;
     return (
       <div>
-        <ul>
-          <Messages messages={messages} />
-        </ul>
         <input onKeyPress={this.handleTyping.bind(this)} id="outgoingMessage" type="text" name="outgoingMessage" placeholder="send a message" />
+        <ul>
+          <Messages messages={messages} handleClick={this.handleClick.bind(this)} />
+        </ul>
       </div>
     );
   }
