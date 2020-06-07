@@ -34,6 +34,10 @@ const MessageDetails = styled.div`
 const Button = styled.button`
   display: grid;
   justify-self: right;
+  background-color: white;
+  border: ${({ message }) => (message.pinned ? '2px solid rgba(184, 255, 255, 0.851)' : '2px solid rgba(67, 185, 235, 0.605)')};
+  border-radius: 5px;
+  color: black;
 `;
 
 const User = styled.p`
@@ -67,6 +71,7 @@ const Messages = ({ messages, handleClick }) => (
                 name={`button ${idx}`}
                 type="button"
                 onClick={handleClick}
+                message={message}
               >
                 REMOVE
               </Button>
@@ -84,6 +89,7 @@ const Messages = ({ messages, handleClick }) => (
                 name={`button ${idx}`}
                 type="button"
                 onClick={handleClick}
+                message={message}
               >
                 SAVE
               </Button>
