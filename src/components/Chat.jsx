@@ -10,7 +10,7 @@ const $ = require('jquery');
 const Wrapper = styled.section`
   display: grid;
   padding: 4em;
-  background: papayawhip;
+  /* background: papayawhip; */
   font-family: 'Roboto', sans-serif;
   align-items: center;
 `;
@@ -18,10 +18,11 @@ const Wrapper = styled.section`
 const Input = styled.input`
   /* display: grid; */
   text-align: center;
-  position: fixed;
-  margin: auto;
-  width: 50%;
-  border: 3px solid green;
+  /* position: fixed; */
+  margin-bottom: 10px;
+  width: 100%;
+  border: 1px solid grey;
+  border-radius: 5px;
   padding: 10px;
 `;
 

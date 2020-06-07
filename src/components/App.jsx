@@ -6,21 +6,28 @@ const React = require('react');
 const Title = styled.h1`
   font-size: 1.5em;
   text-align: center;
-  color: palevioletred;
+  color: white;
 `;
 
 const Wrapper = styled.section`
   display: grid;
   padding: 4em;
-  background: papayawhip;
+  background: palevioletred;
   font-family: 'Roboto', sans-serif;
   align-content: center;
+  justify-content: center;
 `;
 
 const Input = styled.input`
   display: grid;
   text-align: center;
-  align: center;
+  /* position: fixed; */
+  margin-bottom: 3px;
+  margin-top: 3px;
+  width: 100%;
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 10px;
 `;
 
 class App extends React.Component {
@@ -43,6 +50,8 @@ class App extends React.Component {
 
   render() {
     const { username, room } = this.state;
+    // const username = 'carlitos';
+    // const room = 'roomy';
     return (
       <Wrapper>
         <Title>silentSHOUT</Title>

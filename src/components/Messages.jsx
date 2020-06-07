@@ -5,20 +5,25 @@ const React = require('react');
 
 // Create a Wrapper component that'll render a <section> tag with some styles
 const Wrapper = styled.section`
+  display: grid;
   padding: 4em;
-  background: papayawhip;
+  background: white;
   font-family: 'Roboto', sans-serif;
+  align-items: center;
 `;
 
-const Pinned = styled.div`
-  background: rgba(250, 220, 48, 0.536);
+const Message = styled.div`
   display: grid;
+  background-color: ${({ message }) => (message.pinned ? 'rgba(250, 220, 48, 0.536)' : 'rgba(67, 185, 235, 0.605)')};
+  border-radius: 20px;
+  margin: 5px;
+
 `;
 
-const NotPinned = styled.div`
-  background: rgba(35, 230, 184, 0.564);
-  display: grid;
-`;
+// const NotPinned = styled.div`
+//   background: ;
+//   display: grid;
+// `;
 
 const MessageDetails = styled.div`
   display: grid;
@@ -33,6 +38,7 @@ const Button = styled.button`
 
 const User = styled.p`
   color: grey;
+  margin-right: 2em;
 `;
 
 // Use Title and Wrapper like any other React component – except they're styled!
@@ -50,12 +56,12 @@ const Messages = ({ messages, handleClick }) => (
       <li id={`message ${idx}`}>
         {message.pinned
           ? (
-            <Pinned>
+            <Message message={message}>
               <MessageDetails>
                 <User>{`${message.username}`}</User>
                 <p className="content">{`${message.outgoingMessage}`}</p>
                 <p />
-                <p className="time">{`${message.time}`}</p>
+                {/* <p className="time">{`${message.time}`}</p> */}
               </MessageDetails>
               <Button
                 name={`button ${idx}`}
@@ -64,15 +70,15 @@ const Messages = ({ messages, handleClick }) => (
               >
                 REMOVE
               </Button>
-            </Pinned>
+            </Message>
           )
           : (
-            <NotPinned>
+            <Message message={message}>
               <MessageDetails>
                 <User>{`${message.username}`}</User>
                 <p className="content">{`${message.outgoingMessage}`}</p>
                 <p />
-                <p className="time">{`${message.time}`}</p>
+                {/* <p className="time">{`${message.time}`}</p> */}
               </MessageDetails>
               <Button
                 name={`button ${idx}`}
@@ -81,7 +87,7 @@ const Messages = ({ messages, handleClick }) => (
               >
                 SAVE
               </Button>
-            </NotPinned>
+            </Message>
           )}
       </li>
     ))}
