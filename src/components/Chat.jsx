@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Messages from './Messages';
 
 const React = require('react');
@@ -35,8 +36,11 @@ class Chat extends React.Component {
     const {
       socket, username, outgoingMessage, messages, room,
     } = this.state;
-    const newMessages = [...messages, { username, outgoingMessage }];
-    socket.emit('message', { username, room, outgoingMessage });
+    const newMessage = {
+      username, room, outgoingMessage, time: new Date(),
+    };
+    const newMessages = [...messages, newMessage];
+    socket.emit('message', newMessage);
     this.setState(
       { messages: newMessages }, () => {
         document.getElementById('outgoingMessage').value = '';
@@ -68,5 +72,9 @@ class Chat extends React.Component {
     );
   }
 }
+Chat.propTypes = {
+  username: PropTypes.string.isRequired,
+  room: PropTypes.string.isRequired,
+};
 
 export default Chat;

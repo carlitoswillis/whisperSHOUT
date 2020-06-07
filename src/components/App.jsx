@@ -14,8 +14,6 @@ class App extends React.Component {
     if (key === 'Enter' && value !== '') {
       this.setState({
         [name]: value,
-      }, () => {
-        console.log(this.state);
       });
     }
   }
