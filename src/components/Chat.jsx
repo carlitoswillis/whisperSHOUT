@@ -6,17 +6,23 @@ const io = require('socket.io-client');
 class Chat extends React.Component {
   constructor(props) {
     super(props);
-    const { username } = this.props;
+    const { username, room } = this.props;
     this.state = {
       messages: [],
-      socket: io.connect(window.location.origin),
+      socket: io.connect(window.location.origin, { query: `username=${username}` }),
       username,
+      room,
     };
   }
 
   componentDidMount() {
-    const { socket, messages } = this.state;
+    const { socket, messages, room } = this.state;
     const newMessages = [...messages];
+
+    socket.on('connect', () => {
+      socket.emit('join', { room });
+    });
+
     socket.on('message', (message) => {
       newMessages.push(message);
       this.setState(
@@ -27,10 +33,10 @@ class Chat extends React.Component {
 
   handleSubmit() {
     const {
-      socket, username, outgoingMessage, messages,
+      socket, username, outgoingMessage, messages, room,
     } = this.state;
     const newMessages = [...messages, { username, outgoingMessage }];
-    socket.emit('message', { username, outgoingMessage });
+    socket.emit('message', { username, room, outgoingMessage });
     this.setState(
       { messages: newMessages }, () => {
         document.getElementById('outgoingMessage').value = '';
@@ -49,7 +55,6 @@ class Chat extends React.Component {
       }
     });
   }
-  // onChange={this.handleTyping.bind(this)}
 
   render() {
     const { messages } = this.state;
