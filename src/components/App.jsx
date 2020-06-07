@@ -22,7 +22,7 @@ class App extends React.Component {
     const { username } = this.state;
     return (
       <div>
-        <h1>whisperSHOUT</h1>
+        <h1>silentSHOUT</h1>
         {username ? <Chat username={username} /> : <input onKeyPress={this.handleChange.bind(this)} type="text" name="username" placeholder="username" />}
       </div>
     );

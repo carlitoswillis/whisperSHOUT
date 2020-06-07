@@ -1,5 +1,5 @@
 {
-  "name": "whispershout",
+  "name": "silentshout",
   "version": "1.0.0",
   "description": "A private chat app for secure communication. Includes automatic chat clearing, a flush button for clearing all chat instances, and a long term pinning option for important and less private messages.",
   "main": "server/index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/carlitoswillis/whisperSHOUT.git"
+    "url": "git+https://github.com/carlitoswillis/silentSHOUT.git"
   },
   "keywords": [
     "privacy",
@@ -25,9 +25,9 @@
   "author": "Carlitos Willis",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/carlitoswillis/whisperSHOUT/issues"
+    "url": "https://github.com/carlitoswillis/silentSHOUT/issues"
   },
-  "homepage": "https://github.com/carlitoswillis/whisperSHOUT#readme",
+  "homepage": "https://github.com/carlitoswillis/silentSHOUT#readme",
   "dependencies": {
     "bunyan": "^1.8.12",
     "compression": "^1.7.4",
