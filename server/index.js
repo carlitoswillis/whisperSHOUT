@@ -29,14 +29,14 @@ app.get('/save/', (req, res) => {
 
 app.post('/save/', (req, res) => {
   if (req.body.room) {
-    saveMessage(req.body, (err) => {
+    saveMessage(req.body, (err, result) => {
       if (err) {
         res.status(404);
         res.end();
         throw err;
       } else {
         res.status(201);
-        res.end();
+        res.end(JSON.stringify(result));
       }
     });
   } else {

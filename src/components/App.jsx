@@ -1,6 +1,27 @@
+import styled from 'styled-components';
 import Chat from './Chat';
 
 const React = require('react');
+
+const Title = styled.h1`
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+`;
+
+const Wrapper = styled.section`
+  display: grid;
+  padding: 4em;
+  background: papayawhip;
+  font-family: 'Roboto', sans-serif;
+  align-content: center;
+`;
+
+const Input = styled.input`
+  display: grid;
+  text-align: center;
+  align: center;
+`;
 
 class App extends React.Component {
   constructor(props) {
@@ -23,14 +44,14 @@ class App extends React.Component {
   render() {
     const { username, room } = this.state;
     return (
-      <div>
-        <h1>silentSHOUT</h1>
+      <Wrapper>
+        <Title>silentSHOUT</Title>
         {username
-          ? <div /> : <input onKeyPress={this.handleChange.bind(this)} type="text" name="username" placeholder="username" />}
+          ? <div /> : <Input onKeyPress={this.handleChange.bind(this)} type="text" name="username" placeholder="username" />}
         {room
-          ? <div /> : <input onKeyPress={this.handleChange.bind(this)} type="text" name="room" placeholder="room name" />}
+          ? <div /> : <Input onKeyPress={this.handleChange.bind(this)} type="text" name="room" placeholder="room name" />}
         {username && room ? <Chat username={username} room={room} /> : <div />}
-      </div>
+      </Wrapper>
     );
   }
 }

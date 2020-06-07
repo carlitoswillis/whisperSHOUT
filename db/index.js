@@ -33,15 +33,15 @@ const saveMessage = (message, callback) => {
   let query = '';
   pool.query(`SELECT * FROM saved WHERE id='${message.id}'`, (err) => {
     if (err) {
-      query = `INSERT INTO saved(room, message, time, username) values('${message.room}', '${message.outgoingMessage}', '${message.time}', '${message.username}')`;
+      query = `INSERT INTO saved(room, message, time, username) values('${message.room}', '${message.outgoingMessage}', '${message.time}', '${message.username}') RETURNING *`;
     } else {
-      query = `INSERT INTO saved(room, message, time, username, id) values('${message.room}', '${message.outgoingMessage}', '${message.time}', '${message.username}', ${message.id}) ON CONFLICT DO NOTHING`;
+      query = `INSERT INTO saved(room, message, time, username, id) values('${message.room}', '${message.outgoingMessage}', '${message.time}', '${message.username}', ${message.id}) ON CONFLICT DO NOTHING RETURNING *`;
     }
-    pool.query(query, (error) => {
+    pool.query(query, (error, result) => {
       if (error) {
         callback(error);
       } else {
-        callback(null);
+        callback(null, result.rows[0]);
       }
     });
   });

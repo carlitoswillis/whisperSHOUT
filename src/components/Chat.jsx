@@ -1,10 +1,29 @@
 /* eslint-disable react/jsx-no-bind */
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Messages from './Messages';
 
 const React = require('react');
 const io = require('socket.io-client');
 const $ = require('jquery');
+
+const Wrapper = styled.section`
+  display: grid;
+  padding: 4em;
+  background: papayawhip;
+  font-family: 'Roboto', sans-serif;
+  align-items: center;
+`;
+
+const Input = styled.input`
+  /* display: grid; */
+  text-align: center;
+  position: fixed;
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+`;
 
 class Chat extends React.Component {
   constructor(props) {
@@ -86,7 +105,10 @@ class Chat extends React.Component {
       },
       data: JSON.stringify(message),
     };
-    $.ajax(settings).done(() => {
+    $.ajax(settings).done((response) => {
+      if (message.pinned) {
+        message.id = JSON.parse(response).id;
+      }
       this.setState(
         { messages },
       );
@@ -96,12 +118,12 @@ class Chat extends React.Component {
   render() {
     const { messages } = this.state;
     return (
-      <div>
-        <input onKeyPress={this.handleTyping.bind(this)} id="outgoingMessage" type="text" name="outgoingMessage" placeholder="send a message" />
+      <Wrapper>
+        <Input onKeyPress={this.handleTyping.bind(this)} id="outgoingMessage" type="text" name="outgoingMessage" placeholder="send a message" />
         <ul>
           <Messages messages={messages} handleClick={this.handleClick.bind(this)} />
         </ul>
-      </div>
+      </Wrapper>
     );
   }
 }
