@@ -12,9 +12,11 @@ class App extends React.Component {
     const { key, target } = e;
     const { name, value } = target;
     if (key === 'Enter' && value !== '') {
-      this.setState({
-        [name]: value,
-      });
+      if (!(target === 'username') && !(value === 'system')) {
+        this.setState({
+          [name]: value,
+        });
+      }
     }
   }
 

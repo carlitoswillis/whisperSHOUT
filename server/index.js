@@ -90,7 +90,7 @@ io.on('connection', (socket) => {
       }
     });
     io.in(data.room).emit('message', {
-      username: 'system', outgoingMessage: `${socket.handshake.query.username} connected to ${data.room} at`, time: new Date(), system: true,
+      username: 'system', outgoingMessage: `${socket.handshake.query.username} connected to ${data.room}`, time: new Date().toISOString(), system: true,
     });
   });
 

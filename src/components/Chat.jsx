@@ -74,7 +74,9 @@ class Chat extends React.Component {
     let { messages } = this.state;
     messages = [...messages];
     const message = messages[index];
-    message.pinned = !message.pinned;
+    if (message.username !== 'system') {
+      message.pinned = !message.pinned;
+    }
     const settings = {
       url: 'http://127.0.0.1:3000/save/',
       method: message.pinned ? 'POST' : 'DELETE',
