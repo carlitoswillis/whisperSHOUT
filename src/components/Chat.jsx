@@ -9,7 +9,7 @@ class Chat extends React.Component {
     const { username } = this.props;
     this.state = {
       messages: [],
-      socket: io.connect(window.location.origin),
+      socket: io.connect(window.location.origin, { query: `username=${username}` }),
       username,
     };
   }
