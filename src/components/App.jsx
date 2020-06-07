@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import styled from 'styled-components';
 import Chat from './Chat';
 
@@ -48,13 +49,19 @@ class App extends React.Component {
     }
   }
 
+  reset() {
+    this.setState({
+      username: '', room: '',
+    });
+  }
+
   render() {
     const { username, room } = this.state;
     // const username = 'carlitos';
     // const room = 'roomy';
     return (
       <Wrapper>
-        <Title>silentSHOUT</Title>
+        <Title onClick={this.reset.bind(this)}>silentSHOUT</Title>
         {username
           ? <div /> : <Input onKeyPress={this.handleChange.bind(this)} type="text" name="username" placeholder="username" />}
         {room
