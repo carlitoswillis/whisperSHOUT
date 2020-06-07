@@ -14,7 +14,7 @@ const Wrapper = styled.section`
 
 const Message = styled.div`
   display: grid;
-  background-color: ${({ message }) => (message.pinned ? 'rgba(250, 220, 48, 0.536)' : 'rgba(67, 185, 235, 0.605)')};
+  background-color: ${({ message }) => (message.pinned ? 'rgba(184, 255, 255, 0.851)' : 'rgba(67, 185, 235, 0.605)')};
   border-radius: 20px;
   margin: 5px;
 
