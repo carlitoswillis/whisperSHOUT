@@ -9,7 +9,8 @@ const Messages = ({ messages, handleClick }) => (
         {message.pinned
           ? (
             <div className="message pinned">
-              <p className="content">{`${message.username}: ${message.outgoingMessage}`}</p>
+              <p className="user">{`${message.username}`}</p>
+              <p className="content">{`${message.outgoingMessage}`}</p>
               <p className="time">{`${message.time}`}</p>
               <button
                 name={`button ${idx}`}
@@ -22,7 +23,8 @@ const Messages = ({ messages, handleClick }) => (
           )
           : (
             <div className="message pinned">
-              <p className="content">{`${message.username}: ${message.outgoingMessage}`}</p>
+              <p className="user">{`${message.username}`}</p>
+              <p className="content">{`${message.outgoingMessage}`}</p>
               <p className="time">{`${message.time}`}</p>
               <button
                 name={`button ${idx}`}
