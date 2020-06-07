@@ -13,9 +13,6 @@ const app = express();
 app.use(compression());
 
 app.use(express.static('public'));
-// app.get('/', (req, res) => {
-//   res
-// });
 
 const server = app.listen(port, (err) => {
   if (err) {
@@ -28,9 +25,8 @@ const server = app.listen(port, (err) => {
 const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
-  log.info('user connected');
-  socket.emit('message', 'user connected');
-  socket.on('another event', (data) => {
-    log.info(data);
+  socket.emit('message', { username: 'system', outgoingMessage: 'someone connected', system: true });
+  socket.on('message', (data) => {
+    io.emit('message', data);
   });
 });

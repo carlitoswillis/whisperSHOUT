@@ -2,7 +2,11 @@ const React = require('react');
 
 const Messages = ({ messages }) => (
   <div>
-    {messages.map((message) => <li>{message}</li>)}
+    {messages.map((message) => (
+      <li>
+        {`${message.username}: ${message.outgoingMessage}`}
+      </li>
+    ))}
   </div>
 );
 
