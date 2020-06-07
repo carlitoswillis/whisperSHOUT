@@ -6,34 +6,50 @@ const io = require('socket.io-client');
 class Chat extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { messages: [], socket: io.connect(window.location.origin) };
+    const { username } = this.props;
+    this.state = {
+      messages: [],
+      socket: io.connect(window.location.origin),
+      username,
+    };
   }
 
   componentDidMount() {
     const { socket, messages } = this.state;
+    const newMessages = [...messages];
     socket.on('message', (message) => {
+      newMessages.push(message);
       this.setState(
-        { messages: [...messages, message] },
+        { messages: newMessages },
       );
     });
   }
 
   handleSubmit() {
     const {
-      socket, user, outgoingMessage, messages,
+      socket, username, outgoingMessage, messages,
     } = this.state;
-    socket.emit('message', { user, outgoingMessage }, (message) => {
-      this.setState(
-        { messages: [...messages, message] },
-      );
-    });
+    const newMessages = [...messages, { username, outgoingMessage }];
+    socket.emit('message', { username, outgoingMessage });
+    this.setState(
+      { messages: newMessages }, () => {
+        document.getElementById('outgoingMessage').value = '';
+      },
+    );
   }
 
-  handleTyping(event) {
+  handleTyping(e) {
+    const { key, target } = e;
+    const { name, value } = target;
     this.setState({
-      [event.target.name]: event.target.value,
+      [name]: value,
+    }, () => {
+      if (key === 'Enter') {
+        this.handleSubmit();
+      }
     });
   }
+  // onChange={this.handleTyping.bind(this)}
 
   render() {
     const { messages } = this.state;
@@ -42,6 +58,7 @@ class Chat extends React.Component {
         <ul>
           <Messages messages={messages} />
         </ul>
+        <input onKeyPress={this.handleTyping.bind(this)} id="outgoingMessage" type="text" name="outgoingMessage" placeholder="send a message" />
       </div>
     );
   }
