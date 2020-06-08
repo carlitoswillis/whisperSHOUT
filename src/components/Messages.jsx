@@ -14,7 +14,7 @@ const Wrapper = styled.section`
 
 const Message = styled.div`
   display: grid;
-  background-color: ${({ message }) => (message.pinned ? 'rgba(184, 255, 255, 0.851)' : 'rgba(67, 185, 235, 0.605)')};
+  background-color: ${({ message }) => (message.pinned ? 'rgba(184, 255, 255, 0.891)' : 'rgba(67, 185, 235, 0.705)')};
   border-radius: 20px;
   margin: 5px;
 
@@ -29,15 +29,23 @@ const MessageDetails = styled.div`
   display: grid;
   grid-template-columns: 2fr 4fr;
   margin: 2em 2em 2em 2em;
+  justify-items: center;
+  align-items: center;
+  width: 80%;
 `;
 
 const Button = styled.button`
-  display: grid;
-  justify-self: right;
-  background-color: white;
-  border: ${({ message }) => (message.pinned ? '2px solid rgba(184, 255, 255, 0.851)' : '2px solid rgba(67, 185, 235, 0.605)')};
+  /* display: grid; */
+  /* display: inline-block; */
+  /* float: right; */
+  background-color: ${({ message }) => (message.pinned ? 'rgb(184, 255, 255)' : 'rgb(67, 185, 235)')};
   border-radius: 5px;
-  color: black;
+  /* color: black; */
+  height: 1.5em;
+  text-align: center;
+  border: none;
+  border-radius: 4px;
+  /* margin-left: 35%; */
 `;
 
 const User = styled.p`
@@ -54,7 +62,7 @@ const User = styled.p`
 //   </Wrapper>
 // );
 
-const Messages = ({ messages, handleClick }) => (
+const Messages = ({ messages, handleClick, handleEdit }) => (
   <Wrapper>
     {messages.map((message, idx) => (
       <li id={`message ${idx}`}>
@@ -64,7 +72,6 @@ const Messages = ({ messages, handleClick }) => (
               <MessageDetails>
                 <User>{`${message.username}`}</User>
                 <p className="content">{`${message.outgoingMessage}`}</p>
-                <p />
                 {/* <p className="time">{`${message.time}`}</p> */}
               </MessageDetails>
               <Button
@@ -75,6 +82,14 @@ const Messages = ({ messages, handleClick }) => (
               >
                 REMOVE
               </Button>
+              {/* <Button
+                name={`edit ${idx}`}
+                type="button"
+                onClick={handleEdit}
+                message={message}
+              >
+                EDIT
+              </Button> */}
             </Message>
           )
           : (
@@ -82,7 +97,6 @@ const Messages = ({ messages, handleClick }) => (
               <MessageDetails>
                 <User>{`${message.username}`}</User>
                 <p className="content">{`${message.outgoingMessage}`}</p>
-                <p />
                 {/* <p className="time">{`${message.time}`}</p> */}
               </MessageDetails>
               <Button
@@ -93,6 +107,14 @@ const Messages = ({ messages, handleClick }) => (
               >
                 SAVE
               </Button>
+              {/* <Button
+                name={`edit ${idx}`}
+                type="button"
+                onClick={handleEdit}
+                message={message}
+              >
+                EDIT
+              </Button> */}
             </Message>
           )}
       </li>
@@ -102,5 +124,6 @@ const Messages = ({ messages, handleClick }) => (
 Messages.propTypes = {
   messages: PropTypes.arrayOf('objects').isRequired,
   handleClick: PropTypes.func.isRequired,
+  handleEdit: PropTypes.func.isRequired,
 };
 export default Messages;

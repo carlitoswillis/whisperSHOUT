@@ -21,7 +21,7 @@ const Input = styled.input`
   /* position: fixed; */
   margin-bottom: 10px;
   width: 100%;
-  border: 1px solid grey;
+  border: 0px solid grey;
   border-radius: 5px;
   padding: 10px;
 `;
@@ -91,12 +91,32 @@ class Chat extends React.Component {
 
   handleClick(e) {
     const index = e.target.name.split(' ')[1];
-    let { messages } = this.state;
+    let { messages, username } = this.state;
     messages = [...messages];
     const message = messages[index];
-    if (message.username !== 'system') {
+    if (message.username === username) {
       message.pinned = !message.pinned;
     }
+    const settings = {
+      url: 'http://127.0.0.1:3000/save/',
+      method: message.pinned ? 'POST' : 'DELETE',
+      timeout: 0,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify(message),
+    };
+    $.ajax(settings).done((response) => {
+      if (message.pinned) {
+        message.id = JSON.parse(response).id;
+      }
+      this.setState(
+        { messages },
+      );
+    });
+  }
+
+  handleEdit() {
     const settings = {
       url: 'http://127.0.0.1:3000/save/',
       method: message.pinned ? 'POST' : 'DELETE',
@@ -120,9 +140,9 @@ class Chat extends React.Component {
     const { messages } = this.state;
     return (
       <Wrapper>
-        <Input onKeyPress={this.handleTyping.bind(this)} id="outgoingMessage" type="text" name="outgoingMessage" placeholder="send a message" />
+        <Input onKeyPress={this.handleTyping.bind(this)} id="outgoingMessage" type="text" name="outgoingMessage" placeholder="send a message... type and hit enter" />
         <ul>
-          <Messages messages={messages} handleClick={this.handleClick.bind(this)} />
+          <Messages messages={messages} handleEdit={this.handleEdit.bind(this)} handleClick={this.handleClick.bind(this)} />
         </ul>
       </Wrapper>
     );

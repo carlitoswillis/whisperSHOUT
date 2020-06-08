@@ -56,9 +56,9 @@ class App extends React.Component {
   }
 
   render() {
-    const { username, room } = this.state;
-    // const username = 'carlitos';
-    // const room = 'roomy';
+    // const { username, room } = this.state;
+    const username = 'carlitos';
+    const room = 'roomy';
     return (
       <Wrapper>
         <Title onClick={this.reset.bind(this)}>silentSHOUT</Title>
