@@ -98,7 +98,7 @@ class Chat extends React.Component {
       message.pinned = !message.pinned;
     }
     const settings = {
-      url: 'http://127.0.0.1:3000/save/',
+      url: '/save/',
       method: message.pinned ? 'POST' : 'DELETE',
       timeout: 0,
       headers: {

@@ -3,6 +3,7 @@ const os = require('os');
 const compression = require('compression');
 const bunyan = require('bunyan');
 const socketio = require('socket.io');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const { saveMessage, readSavedMessages, deleteMessage } = require('../db');
 
 const app = express();
@@ -65,7 +66,13 @@ const server = app.listen(port, (err) => {
   if (err) {
     throw err;
   } else {
-    log.info(`listening at http://${os.networkInterfaces().lo0[0].address}:${port}`);
+    let address;
+    try {
+      address = `http://${os.networkInterfaces().lo0[0].address}:`;
+    } catch (e) {
+      address = '';
+    }
+    log.info(`listening at ${address}${port}`);
   }
 });
 

@@ -5,9 +5,9 @@ const log = bunyan.createLogger({ name: 'production' });
 
 const pool = new Pool({
   user: 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  database: 'silentshout',
-  password: process.env.DB_PASSWORD || 'password',
+  host: process.env.POSTGRES_HOST || 'localhost',
+  // database: 'silentshout',
+  password: process.env.POSTGRES_PASSWORD || 'password',
   port: 5432,
 });
 

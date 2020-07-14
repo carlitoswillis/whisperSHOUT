@@ -10,6 +10,15 @@ const Title = styled.h1`
   color: white;
 `;
 
+const Center = styled.div`
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+`;
+
 const Wrapper = styled.section`
   display: grid;
   padding: 4em;
@@ -26,7 +35,7 @@ const Input = styled.input`
   margin-bottom: 3px;
   margin-top: 3px;
   width: 100%;
-  border: 1px solid grey;
+  border: 1px solid white;
   border-radius: 10px;
   padding: 10px;
 `;
@@ -56,16 +65,18 @@ class App extends React.Component {
   }
 
   render() {
-    // const { username, room } = this.state;
-    const username = 'carlitos';
-    const room = 'roomy';
+    const { username, room } = this.state;
+    // const username = 'carlitos';
+    // const room = 'roomy';
     return (
       <Wrapper>
         <Title onClick={this.reset.bind(this)}>silentSHOUT</Title>
-        {username
-          ? <div /> : <Input onKeyPress={this.handleChange.bind(this)} type="text" name="username" placeholder="username" />}
-        {room
-          ? <div /> : <Input onKeyPress={this.handleChange.bind(this)} type="text" name="room" placeholder="room name" />}
+        <Center>
+          {username
+            ? <div /> : <Input onKeyPress={this.handleChange.bind(this)} type="text" name="username" placeholder="username" />}
+          {room
+            ? <div /> : <Input onKeyPress={this.handleChange.bind(this)} type="text" name="room" placeholder="room name" />}
+        </Center>
         {username && room ? <Chat username={username} room={room} /> : <div />}
       </Wrapper>
     );

@@ -1,0 +1,30 @@
+version: '3.0'
+services:
+  web:
+    build: .
+    volumes:
+      - pg:/var/lib/postgresql/data
+      - data:/data
+    ports:
+    - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST: db
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg:/var/lib/postgresql/data
+      - data:/data
+volumes:
+  pg:
+    driver: local
+  data:
+    driver: local
