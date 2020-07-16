@@ -2,6 +2,7 @@ const express = require('express');
 const os = require('os');
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 const compression = require('compression');
 const bunyan = require('bunyan');
 const socketio = require('socket.io');
