@@ -1,12 +1,22 @@
 const express = require('express');
 const os = require('os');
+const fs = require('fs');
+const path = require('path');
 const compression = require('compression');
 const bunyan = require('bunyan');
 const socketio = require('socket.io');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const { saveMessage, readSavedMessages, deleteMessage } = require('../db');
 
+const privateKey = fs.readFileSync(path.join(__dirname, '..', '..', 'dotcom', 'private.key'), 'utf8');
+const certificate = fs.readFileSync(path.join(__dirname, '..', '..', 'dotcom', 'www_carlitoswillis_com.crt'), 'utf8');
+const credentials = { key: privateKey, cert: certificate };
+
 const app = express();
+// const httpApp = express();
+// const httpServer = http.createServer(httpApp);
+const httpsServer = https.createServer(credentials, app);
+
 const log = bunyan.createLogger({ name: 'production' });
 log.info('starting up');
 const port = process.env.PORT || 3000;
@@ -62,13 +72,13 @@ app.delete('/save/', (req, res) => {
   }
 });
 
-const server = app.listen(port, (err) => {
+const server = httpsServer.listen(port, (err) => {
   if (err) {
     throw err;
   } else {
     let address;
     try {
-      address = `http://${os.networkInterfaces().lo0[0].address}:`;
+      address = `https://${os.networkInterfaces().lo0[0].address}:`;
     } catch (e) {
       address = '';
     }
